@@ -24,7 +24,7 @@ void main() {
 
 
     while (true) {
-        IO.println("Digite o id de 1 a " + banco.size() + " ou 0 para sair ou "+ (banco.size()+1) +" para ver o cache:");
+        IO.println("Digite o id de 1 a " + banco.size() + " ou 0 para sair ou " + (banco.size() + 1) + " para ver o cache:");
         int user = sc.nextInt();
 
 
@@ -32,7 +32,7 @@ void main() {
             break;
         }
 
-        if (user == banco.size()+1){
+        if (user == banco.size() + 1) {
             cache.forEach(System.out::println);
             continue;
         }
@@ -42,23 +42,35 @@ void main() {
             continue;
         }
 
-        Pessoa pessoa = banco.get(user - 1);
+        Pessoa pessoa = null;
 
-        if (cache.contains(pessoa)) {
-            IO.println("Usuário encontrado no cache:");
+        for (Pessoa p : cache) {
+            if (p.getId() == user) {
+                pessoa = p;
+                break;
+            }
+        }
+        if (pessoa != null) {
+            IO.println("Encontrado no cache: " + pessoa);
         } else if (cache.size() == 10) {
             cache.removeFirst();
-            IO.println("Pessoa buscada no banco e adicionada ao cache:");
+            for (Pessoa p : banco) {
+                if (p.getId() == user) {
+                    pessoa = p;
+                    break;
+                }
+            }
+            IO.println("Encontrado no Banco e adicionado no cache: " + pessoa);
             cache.add(pessoa);
-
-        } else {
-            IO.println("Pessoa buscada no banco e adicionada ao cache:");
+        }else {
+            for (Pessoa p : banco) {
+                if (p.getId() == user) {
+                    pessoa = p;
+                    break;
+                }
+            }
+            IO.println("Encontrado no Banco e adicionado no cache: " + pessoa);
             cache.add(pessoa);
         }
-
-        IO.println(pessoa);
-
     }
-
-
 }
